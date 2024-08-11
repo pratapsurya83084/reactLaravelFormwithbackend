@@ -1,14 +1,15 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\userform;
-use Illuminate\Http\Request;
 
 class UserformController extends Controller
 {
-    // userform controller write here
-    public function index() {
-        return userform::all();   
+    public function index()
+    {
+        $data = userform::all(); // Retrieve all records from the Userform table
+        return response()->json($data); // Return data as JSON
     }
 }
+
+
