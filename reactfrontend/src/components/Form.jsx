@@ -3,13 +3,17 @@ import React, { useState } from 'react';
 import { useNavigate ,Link } from 'react-router-dom';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import axios from 'axios';
+import $ from 'jquery';
+
 const Form = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     email: '',
-    contact_no: '',
+    phone_number: '',
     country: '',
-    jobrole: '',
+    job: '',
+    course_enroll_date:'',
+    course:'',
   });
   
   const navigate = useNavigate();
@@ -28,8 +32,19 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Check if all fields are filled
+
+    // $.ajax({
+    //   url:'submitform',
+    //   type: 'POST',
+    //   data: formData,
+    //   success: function(response){
+    //     navigate("/submit/success");
+    //   }
+    // })  
+
+    // Fetch CSRF token from meta tag
+    // const csrfMetaTag = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    
     for (const key in formData) {
       if (formData[key] === '') {
         alert(`Please fill out the ${key.replace(/([A-Z])/g, ' $1').toLowerCase()}.`);
@@ -39,26 +54,27 @@ const Form = () => {
   
     // Form validation checks
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
     if (!emailRegex.test(formData.email)) {
       alert('Please enter a valid email address.');
       return;
     }
   
     try {
-      const response = await axios.post('http://localhost/form/phpbackend/submit.php', formData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      console.log(response);
-      navigate("/submit/success")
+      // console.log(formData);
       
-      // Handle success response
-      // alert(response.data.message);
-  
-      if (response.data.message === "Form submitted successfully!") {
+      const response=await axios.post('/api/formsubmit',{
+        method:"post",
+        headers:{
+          
+          "Content-Type":'application/json',
+        },
+        body:JSON.stringify(formData),
+      });
+      // console.log(response);
+      
+      alert(response.data.message);
+
+      if (response.data.message === "Data saved successfully!") {
         localStorage.setItem("userdetail", JSON.stringify(formData));
         navigate("/submit/success");  // Redirect to success page
       }
@@ -66,7 +82,6 @@ const Form = () => {
       console.error('Error submitting form:', error);
     }
   };
-
   return (
     <div className="container mx-auto px-4 py-10 md:py-20 mb-20">
       <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold mb-5 sm:mb-20 md:mb-20 text-center">
@@ -76,7 +91,8 @@ const Form = () => {
       {/* date and course name yet to be add */}
       <form onSubmit={handleSubmit}
       action=''
-      method='POST'
+      
+      method='post'
       className="max-w-lg mx-auto bg-[#009bb5] p-8 rounded-lg shadow-md">
         {/* your course opting*/}
         <div className="mb-6">
@@ -97,30 +113,30 @@ const Form = () => {
 
         {/* add input date  */}
         <div className="mb-6">
-          <label htmlFor="date" className="block text-white font-bold mb-2">
+          <label htmlFor="course_enroll_date" className="block text-white font-bold mb-2">
           Course Journey Begins With Us
           </label>
           <input
-            id="date"
+            id="course_enroll_date"
             type="date"
             className="w-full p-3 border border-gray-300 rounded"
             placeholder="enter date"
-            value={formData.date}
+            value={formData.course_enroll_date}
             onChange={handleChange}
             required
           />
         </div>
         {/* Full Name */}
         <div className="mb-6">
-          <label htmlFor="username" className="block text-white font-bold mb-2">
+          <label htmlFor="name" className="block text-white font-bold mb-2">
             Your Full Name
           </label>
           <input
-            id="username"
-            type="phoneNumber"
+            id="name"
+            type="text"
             className="w-full p-3 border border-gray-300 rounded"
             placeholder="Enter your name"
-            value={formData.username}
+            value={formData.name}
             onChange={handleChange}
             required
           />
@@ -144,15 +160,15 @@ const Form = () => {
 
         {/* Phone Number */}
         <div className="mb-6">
-          <label htmlFor="contact_no" className="block text-white font-bold mb-2">
+          <label htmlFor="phone_number" className="block text-white font-bold mb-2">
             Your Phone Number
           </label>
           <input
-            id="contact_no"
+            id="phone_number"
             type="tel"
             className="w-full p-3 border border-gray-300 rounded"
             placeholder="Enter your phone number"
-            value={formData.contact_no}
+            value={formData.phone_number}
             onChange={handleChange}
             pattern="\d{10}"
             inputMode="numeric"
@@ -179,15 +195,15 @@ const Form = () => {
 
         {/* Job Role */}
         <div className="mb-6">
-          <label htmlFor="jobrole" className="block text-white font-bold mb-2">
+          <label htmlFor="job" className="block text-white font-bold mb-2">
             Your Job Role
           </label>
           <input
-            id="jobrole"
+            id="job"
             type="text"
             className="w-full p-3 border border-gray-300 rounded"
             placeholder="Enter your job role"
-            value={formData.jobrole}
+            value={formData.job}
             onChange={handleChange}
             required
           />

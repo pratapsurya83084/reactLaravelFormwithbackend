@@ -3,8 +3,8 @@ import React from 'react';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 const Footer = () => {
   const currentDate=new Date();
-const currentYear = currentDate.getFullYear();
-console.log(currentYear,currentDate);
+// const currentYear = currentDate.getFullYear();
+// console.log(currentYear,currentDate);
 
   return (
     <footer className='mb-0 bg-gray-100'>

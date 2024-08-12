@@ -2,12 +2,12 @@
 
 // use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\UserformController;
+//  use App\Http\Controllers\UserformController;
 
 Route::get('/', function () {
-    return view('resources/views/welcome.blade.php');
+    return view('welcome');
 });
     
 use App\Http\Controllers\UserformController;
 
-Route::get('/userform', [UserformController::class, 'index']);
+Route::post('/formsubmit', [UserformController::class, 'storedata']);
