@@ -24,6 +24,16 @@ class UserformController extends Controller
             'phone_number' => 'required|string|max:15',
             'country' => 'required|string|max:100',
             'job' => 'required|string|max:100',
+
+           
+                // 'name' => 'required|string|max:255',
+                // 'email' => 'required|email',
+                // 'course_enroll_date' => 'required|date',
+                // 'phone_number' => 'required|numeric',
+                // 'country' => 'required|string|max:255',
+                // 'job' => 'required|string|max:255',
+       
+            
         ]);
 
         $user = userform::create($validatedData);
