@@ -8,7 +8,7 @@ const Home = () => {
    <div className='text-black'>
     {/* wrap form */}
     <Form/>
-      
+     
     </div>
      </Layout>
  

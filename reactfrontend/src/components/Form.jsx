@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { json, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-
-
-
 const Form = () => {
-
-
 
   // const [csrfToken, setCsrfToken] = useState('');
 
